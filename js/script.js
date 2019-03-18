@@ -16,8 +16,11 @@ FSJS project 2 - List Filter and Pagination
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
-
-
+const list = document.querySelectorAll('.student-item'); // Selects all the student items 
+console.log(list.length); // Logs the number of students 
+const pagesRequired = Math.ceil(list.length/10); //How many pages will go on the bottom
+console.log(pagesRequired); // Logs the number of pages
+const pages = document.links.length; // counts all the links in the page aka how many pages there are. 
 
 
 /*** 
@@ -34,9 +37,46 @@ FSJS project 2 - List Filter and Pagination
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+const showPage = (list, page) => {
+ let first = (page * pagesRequired) - pagesRequired;
+ let last = (page * pagesRequired);  
+  for (let i = 0; i < list.length; i+=1) {
+           if (i <= first) {
+      list[i].style.display = 'none';
+    }          if (i >= last) {
+      list[i].style.display = 'none';
+    }
+}
+}
+//showPage();
 
 
 
+/*** Buttons*/
+// Calculates how many pages are required. 
+function appendPageLinks() {
+const ul = document.querySelector('.page');  // Selects the main div
+const paginationDiv = document.createElement('div'); // makes the new div
+  paginationDiv.className = 'pagination'; // gives the new div a class name
+    ul.append(paginationDiv); //sticks the new div after the ul
+ const pdClass = document.querySelector('.pagination'); // selects the paginaiton class(the new div)
+ const paginationList = document.createElement('ul'); //creates the ul that goes in the bottom div
+  pdClass.append(paginationList); // sticks the ul into the bottom div
+  for (let i=0; i <pagesRequired; i+=1){
+     const a = document.createElement('li'); //creates a list item
+     const link = document.createElement('a');    //creates a link item
+    link.textContent = [i+1]; // label for the list item
+    link.href = '#'
+    a.append(link); 
+    paginationList.append(a); // Sticks the button at the bottom of the main div
+    console.log(pages); // Logs the number of each page 
+   
+   a.addEventListener('click', showPage);      
+
+   }
+}
+
+appendPageLinks();
 
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
